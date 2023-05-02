@@ -1,4 +1,7 @@
 body {
-    margin: 0;
-    /* text-align: center; */
-}
+  margin: 0;
+  background-image: url(../images/background.png);
+  background-repeat: no-repeat;
+  background-size: cover; }
+  body #layout-main {
+    height: 100vh; }

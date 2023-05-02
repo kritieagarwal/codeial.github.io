@@ -1,0 +1,15 @@
+footer {
+  background-color: gray;
+  color: white;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px; }
+  footer ul {
+    list-style-type: none; }
+    footer ul li {
+      display: block; }
+      footer ul li a {
+        text-decoration: none;
+        color: white; }
