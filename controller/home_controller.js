@@ -10,7 +10,7 @@ module.exports.home = function (req, res) {
     //         });
     //     })
     //     .catch(err => {
-    //         console.log(err);
+    //         console.log(err); 
     //     });
 
     Post.find({})
