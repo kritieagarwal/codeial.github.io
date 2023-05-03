@@ -7,6 +7,8 @@ module.exports.home = async function (req, res) {
     try {
         // populate the user of each post
         let posts = await Post.find({})
+            // to sort posts in reverse chronological order
+            // -createdAt is how data is saved in mongodb
             .sort('-createdAt')
             .populate('user')
             .populate({
