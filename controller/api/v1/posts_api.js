@@ -14,11 +14,10 @@ module.exports.index = async function (req, res) {
             }
         });
 
-
-    return res.json(200, {
+    return res.status(200).json({
         message: "List of Posts",
         posts: posts
-    })
+    });
 }
 
 
@@ -34,21 +33,19 @@ module.exports.destroy = async function (req, res) {
             await Comment.deleteMany({ post: req.params.id });
 
 
-
-            return res.json(200, {
+            return res.status(200).json({
                 message: "Posts and associated commets deleted"
             });
 
         }
         else {
-            return res.json(401, {
+            return res.status(401).json({
                 message: "You cannot delete this post!"
             });
         }
     }
     catch (err) {
-
-        return res.json(500, {
+        return res.status(500).json({
             message: "Internal Server Error"
         });
     }

@@ -16,6 +16,9 @@ const userSchema = new mongoose.Schema({
     },
 
     name: {
+        // givenName: { type: String, required: true },
+        // familyName: { type: String, required: true }
+
         type: String,
         required: true
     },
