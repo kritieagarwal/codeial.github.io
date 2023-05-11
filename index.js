@@ -1,4 +1,6 @@
 const express = require('express');
+const env = require('./config/environment');
+const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const app = express();
 const port = 8000;
@@ -17,18 +19,23 @@ const flash = require('connect-flash');
 const customMware = require('./config/middleware');
 
 // setup the chat server to be used with socket.io
-const chatServer = require('http').Server(app);
-const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
-chatServer.listen(5000);
-console.log('chat server is listening on port 5000');
+// const chatServer = require('http').Server(app);
+// const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
+// chatServer.listen(5000);
+// console.log('chat server is listening on port 5000');
 
-app.use(sassMiddleware({
-    src: './assets/scss',
-    dest: './assets/css',
-    debug: true,
-    outputStyle: 'extended',
-    prefix: '/css'
-}));
+const path = require('path');
+
+if (env.name == 'development') {
+    app.use(sassMiddleware({
+        src: path.join(__dirname, env.asset_path, '/scss'),
+        dest: path.join(__dirname, env.asset_path, '/css'),
+        debug: true,
+        outputStyle: 'extended',
+        prefix: '/css'
+    }));
+
+}
 
 app.use(express.urlencoded());
 
@@ -38,6 +45,8 @@ app.use(express.static('./assets'));
 
 // make the uploads path available to the browser
 app.use('/uploads', express.static(__dirname + '/uploads'));
+
+app.use(logger(env.morgan.mode, env.morgan.options));
 
 app.use(expressLayouts);
 
@@ -53,8 +62,7 @@ app.set('views', './views');
 // mongo store is used to store the session cookie in the db
 app.use(session({
     name: 'codeial',
-    // todo change the secret before deployement in production mode
-    secret: 'something',
+    secret: env.session_cookie_key,
     saveUninitialized: false,
     resave: false,
     cookie: {
@@ -90,3 +98,5 @@ app.listen(port, function (err) {
 
     console.log(`Server is running on port: ${port}`);
 });
+
+

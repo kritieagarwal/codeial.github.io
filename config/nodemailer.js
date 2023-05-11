@@ -1,19 +1,9 @@
 const nodemailer = require('nodemailer');
 const ejs = require('ejs');
 const path = require('path');
+const env = require('./environment');
 
-let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: 'smtp.gmail.com',
-    post: 587,
-    secure: false,
-    auth: {
-        user: 'kritie.codingninjas@gmail.com',
-        // gmail does not allow third party apps to send mail, hence created app key for nodemailer and used in place of password.
-        pass: 'gfqptqrbjsphglpg'
-
-    }
-});
+let transporter = nodemailer.createTransport(env.smtp);
 
 // for rendering template
 let renderTemplate = (data, relativePath) => {
